@@ -1,0 +1,14 @@
+{
+  "type": "hotel",
+  "reimbursements": [
+    {
+      "date": "2020-01-01",
+      "from_date": "2020-01-01",
+      "to_date": "2020-01-05",
+      "hotel_name": "JW Marriot",
+      "inv_no": "1234",
+      "amt": 4500,
+      "attachement": ""
+    }
+  ]
+}

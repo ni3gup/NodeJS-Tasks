@@ -1,0 +1,27 @@
+{
+  "type": "conveyance",
+  "reimbursements": [
+    {
+      "date": "2020-01-01",
+      "from_place": "Mumbai",
+      "to_place": "Pune",
+      "purpose": "other_city_travel",
+      "mode": "train",
+      "km": 250,
+      "inv_no": "1234",
+      "amt": 650,
+      "attachement": ""
+    },
+    {
+      "date": "2020-01-01",
+      "from_place": "Mumbai (Churchgate)",
+      "to_place": "Mumbai (Andheri)",
+      "purpose": "training",
+      "mode": "taxi",
+      "km": 35,
+      "inv_no": "3575",
+      "amt": 250,
+      "attachement": ""
+    }
+  ]
+}

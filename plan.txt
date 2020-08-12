@@ -1,0 +1,12 @@
+Template Schedule
+1) Create a NodeJs Script to read excel file and convert to json.
+2) Create a database and insert data into database.
+3) Throw Validation Message related to improper fields and data.
+
+npx sequelize-cli model:generate --name Schedule --attributes store_name:string,date:date,employee_id:number,name:string,working_type:string,start:time,end:time,store_id:string
+
+Reimbursement Module
+1) Table reimbursement_type - id, name
+2) reimbursements - id, reimbursement_type_id, date, from, to, purpose, other_purpose, mode, other_mode, km, inv_no, amt, attachement, from_date, to_date, hotel_name
+
+npx sequelize-cli model:generate --name Reimbursement --attributes reimbursement_type_id:integer,date:dateonly,from:string,to:string,purpose:enum,other_purpose:string,mode:enum,other_mode:enum,km:integer,inv_no:string,amt:number,attachement:string,from_date:dateonly,to_date:dateonly,hotel_name:string
