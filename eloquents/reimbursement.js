@@ -1,15 +1,82 @@
+const path = require("path");
+const fs = require("fs");
+
+const moment = require("moment");
+
 const ReimburesmentType = require("../models/reimbursementType");
 const Reimburesment = require("../models/reimbursement");
+const { request } = require("express");
 
-const getTypeId = async (type) => {
-  return await ReimburesmentType.findOne({
-    where: { name: type },
-    attributes: ["id"],
-  });
+const getType = async (conditions, attributes) => {
+  try {
+    return await ReimburesmentType.findOne({
+      where: conditions,
+      attributes,
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 const bulkInsert = async (data) => {
-  Reimburesment.bulkCreate(data);
+  try {
+    Reimburesment.bulkCreate(data);
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getTypes = async () => {
+  try {
+    return await ReimburesmentType.findAll({ attributes: ["id", "name"] });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getReimbursements = async (id, name, selectData) => {
+  try {
+    return await Reimburesment.findAll({
+      where: { reimbursement_type_id: id },
+      order: ["date"],
+      attributes: selectData[name],
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getReimbursement = async (id, name, date, selectData) => {
+  try {
+    return await Reimburesment.findOne({
+      where: { reimbursement_type_id: id, date },
+      attributes: selectData[name],
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const uploadAttachement = (attachement, type, date) => {
+  let attachementPath = "";
+  if (attachement) {
+    // Check if folder exists or create
+    const dir = path.join(__dirname, "..", "public", "uploads");
+
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+
+    const base64Data = attachement.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    const fileExtension = base64Data[1].split("/")[1];
+    const attachementData = attachement.split(";base64,").pop();
+    const uploadPath = `${dir}/${type}-${date}-${moment().valueOf()}.${fileExtension}`;
+    attachementPath = `uploads/${type}-${date}-${moment().valueOf()}.${fileExtension}`;
+
+    fs.writeFile(uploadPath, attachementData, { encoding: "base64" }, () => {});
+  }
+
+  return attachementPath;
 };
 
 const rules = (type) => {
@@ -27,7 +94,6 @@ const rules = (type) => {
     from_date: "requiredIf:type,hotel|dateFormat:YYYY-MM-DD",
     to_date: "requiredIf:type,hotel|dateFormat:YYYY-MM-DD",
     hotel_name: "requiredIf:type,hotel",
-    attachement: "requiredIf:type,in:hotel,food,mobile,internet",
     ...mixedType,
   };
 };
@@ -65,7 +131,7 @@ const getMixedType = (type) => {
 
     case "hotel":
       mixedType = {
-        amt: "requiredIf:type,in:hotel",
+        amt: "requiredIf:type,hotel",
         inv_no: "requiredIf:type,hotel",
         attachement: "requiredIf:type,hotel",
       };
@@ -73,15 +139,15 @@ const getMixedType = (type) => {
 
     case "food":
       mixedType = {
-        amt: "requiredIf:type,in:food",
+        amt: "requiredIf:type,food",
         inv_no: "requiredIf:type,food",
-        attachement: "requiredIf:type,mobile",
+        attachement: "requiredIf:type,food",
       };
       break;
 
     case "mobile":
       mixedType = {
-        amt: "requiredIf:type,in:mobile",
+        amt: "requiredIf:type,mobile",
         inv_no: "requiredIf:type,mobile",
         attachement: "requiredIf:type,mobile",
       };
@@ -89,7 +155,7 @@ const getMixedType = (type) => {
 
     case "internet":
       mixedType = {
-        amt: "requiredIf:type,in:conveyance",
+        amt: "requiredIf:type,internet",
         inv_no: "requiredIf:type,internet",
         attachement: "requiredIf:type,internet",
       };
@@ -102,4 +168,42 @@ const getMixedType = (type) => {
   return mixedType;
 };
 
-module.exports = { getTypeId, rules, messages, bulkInsert };
+const selectData = () => {
+  return {
+    conveyance: [
+      "date",
+      "from_place",
+      "to_place",
+      "purpose",
+      "mode",
+      "km",
+      "inv_no",
+      "amt",
+      "attachement",
+    ],
+    hotel: [
+      "date",
+      "from_date",
+      "to_date",
+      "hotel_name",
+      "inv_no",
+      "amt",
+      "attachement",
+    ],
+    food: ["inv_no", "amt", "attachement"],
+    mobile: ["inv_no", "amt", "attachement"],
+    internet: ["inv_no", "amt", "attachement"],
+  };
+};
+
+module.exports = {
+  getType,
+  getTypes,
+  getReimbursements,
+  getReimbursement,
+  rules,
+  messages,
+  bulkInsert,
+  selectData,
+  uploadAttachement,
+};

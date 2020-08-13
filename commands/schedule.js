@@ -36,45 +36,48 @@ const init = async () => {
         return;
       }
 
-      if (result.length > 0) {
-        const errors = [],
-          data = [];
+      try {
+        if (result.length > 0) {
+          const errors = [],
+            data = [];
 
-        for (let i = 0; i < result.length; i++) {
-          const row = result[i];
-          const formattedData = scheduleEloquent.formattedData(row);
-          console.log(formattedData);
+          for (let i = 0; i < result.length; i++) {
+            const row = result[i];
+            const formattedData = scheduleEloquent.formattedData(row);
 
-          // validate
-          const rules = scheduleEloquent.validationRules();
-          const messages = scheduleEloquent.validationMessages();
+            // validate
+            const rules = scheduleEloquent.validationRules();
+            const messages = scheduleEloquent.validationMessages();
 
-          const v = new Validator(formattedData, rules, messages);
+            const v = new Validator(formattedData, rules, messages);
 
-          const matched = await v.check();
+            const matched = await v.check();
 
-          if (!matched) {
-            errors.push({
-              row: i + 1,
-              error: v.errors,
-            });
+            if (!matched) {
+              errors.push({
+                row: i + 1,
+                error: v.errors,
+              });
+            }
+
+            data.push(formattedData);
           }
 
-          data.push(formattedData);
-        }
-
-        if (errors.length > 0) {
-          console.log(JSON.stringify(errors));
+          if (errors.length > 0) {
+            console.log(JSON.stringify(errors));
+          } else {
+            try {
+              await Schedule.bulkCreate(data);
+              console.log("inserted");
+            } catch (error) {
+              console.log(error);
+            }
+          }
         } else {
-          try {
-            await Schedule.bulkCreate(data);
-            console.log("inserted");
-          } catch (error) {
-            console.log(error);
-          }
+          console.log("No Data Found");
         }
-      } else {
-        console.log("No Data Found");
+      } catch (error) {
+        console.log(error);
       }
 
       await dbConnection.close();

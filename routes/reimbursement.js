@@ -6,4 +6,8 @@ const router = express.Router();
 
 router.post("/add", reimbursementController.add);
 
+router.get("/", reimbursementController.index);
+
+router.post("/", reimbursementController.find);
+
 module.exports = router;

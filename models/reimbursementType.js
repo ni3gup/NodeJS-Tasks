@@ -1,8 +1,8 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes, models } = require("sequelize");
 
 const sequelize = require("../db").sequelize;
 
-const ReimbursementTypes = sequelize.define("reimbursement_types", {
+const ReimbursementType = sequelize.define("reimbursement_types", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -15,4 +15,8 @@ const ReimbursementTypes = sequelize.define("reimbursement_types", {
   },
 });
 
-module.exports = ReimbursementTypes;
+ReimbursementType.associate = function (models) {
+  ReimbursementType.hasMany(models.Reimbursement, { as: "reimbursement" });
+};
+
+module.exports = ReimbursementType;
