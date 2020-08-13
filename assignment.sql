@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2020 at 07:58 AM
+-- Generation Time: Aug 13, 2020 at 09:57 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.1.32
 
@@ -49,18 +49,6 @@ CREATE TABLE `reimbursements` (
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `reimbursements`
---
-
-INSERT INTO `reimbursements` (`id`, `reimbursement_type_id`, `date`, `from_place`, `to_place`, `purpose`, `other_purpose`, `mode`, `other_mode`, `km`, `inv_no`, `amt`, `attachement`, `from_date`, `to_date`, `hotel_name`, `createdAt`, `updatedAt`) VALUES
-(1, 1, '2020-01-01', 'Mumbai', 'Pune', 'other_city_travel', NULL, 'train', NULL, 250, '1234', 650, 'uploads/conveyance-2020-01-01-1597297402836.jpeg', '0000-00-00', '0000-00-00', '', '2020-08-13 05:43:23', '2020-08-13 05:43:23'),
-(2, 1, '2020-01-01', 'Mumbai (Churchgate)', 'Mumbai (Andheri)', 'training', NULL, 'taxi', NULL, 35, '3575', 250, 'uploads/conveyance-2020-01-01-1597297403092.pdf', '0000-00-00', '0000-00-00', '', '2020-08-13 05:43:23', '2020-08-13 05:43:23'),
-(3, 2, '2020-01-01', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 4500, 'uploads/hotel-2020-01-01-1597297681386.jpeg', '2020-01-01', '2020-01-05', 'JW Marriot', '2020-08-13 05:48:01', '2020-08-13 05:48:01'),
-(4, 3, '2020-01-01', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 4500, 'uploads/food-2020-01-01-1597297842341.jpeg', '0000-00-00', '0000-00-00', '', '2020-08-13 05:50:42', '2020-08-13 05:50:42'),
-(5, 4, '2020-01-01', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 4500, 'uploads/mobile-2020-01-01-1597297923217.jpeg', '0000-00-00', '0000-00-00', '', '2020-08-13 05:52:03', '2020-08-13 05:52:03'),
-(6, 5, '2020-01-01', '', '', NULL, NULL, NULL, NULL, NULL, '1234', 4500, 'uploads/internet-2020-01-01-1597298129989.jpeg', '0000-00-00', '0000-00-00', '', '2020-08-13 05:55:29', '2020-08-13 05:55:29');
-
 -- --------------------------------------------------------
 
 --
@@ -105,21 +93,6 @@ CREATE TABLE `schedules` (
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `schedules`
---
-
-INSERT INTO `schedules` (`id`, `date`, `employee_id`, `name`, `working_type`, `start`, `end`, `store_id`, `store_name`, `createdAt`, `updatedAt`) VALUES
-(1, '2019-10-15', 1237780, 'kimmy', 'working time', '08:00:00', '19:00:00', 'RAJD6000883', 'Junbo Store', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(2, '2019-10-15', 1237780, 'kimmy', 'lunch', '12:00:00', '13:00:00', 'RAJD6000883', '', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(3, '2019-10-15', 1237780, 'kimmy', 'break', '15:00:00', '15:30:00', 'RAJD6000883', '', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(4, '2019-10-15', 1237780, 'kimmy', 'training', '16:00:00', '17:00:00', 'RAJD6000883', 'Multiplex samsung', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(5, '2019-10-15', 1237780, 'kimmy', 'route', '18:00:00', '19:00:00', 'RAJD6000883', 'ABC Mart', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(6, '2019-10-16', 1237780, 'kimmy', 'day off', '18:00:00', '19:00:00', 'RAJD6000883', '', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(7, '2019-10-17', 1237780, 'kimmy', 'leave', '18:00:00', '19:00:00', 'RAJD6000883', '', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(8, '2019-10-18', 1237780, 'kimmy', 'leave', '18:00:00', '19:00:00', 'RAJD6000883', '', '2020-08-12 12:15:44', '2020-08-12 12:15:44'),
-(9, '2019-10-19', 1237780, 'kimmy', 'leave', '18:00:00', '19:00:00', 'RAJD6000883', '', '2020-08-12 12:15:44', '2020-08-12 12:15:44');
 
 -- --------------------------------------------------------
 
@@ -178,7 +151,7 @@ ALTER TABLE `sequelizemeta`
 -- AUTO_INCREMENT for table `reimbursements`
 --
 ALTER TABLE `reimbursements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `reimbursement_types`
@@ -190,7 +163,7 @@ ALTER TABLE `reimbursement_types`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

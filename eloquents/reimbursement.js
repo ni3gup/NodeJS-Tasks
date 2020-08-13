@@ -61,7 +61,13 @@ const uploadAttachement = (attachement, type, date) => {
   let attachementPath = "";
   if (attachement) {
     // Check if folder exists or create
-    const dir = path.join(__dirname, "..", "public", "uploads");
+    const dir = path.join(
+      __dirname,
+      "..",
+      "public",
+      "uploads",
+      "reimbursements"
+    );
 
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
@@ -71,7 +77,7 @@ const uploadAttachement = (attachement, type, date) => {
     const fileExtension = base64Data[1].split("/")[1];
     const attachementData = attachement.split(";base64,").pop();
     const uploadPath = `${dir}/${type}-${date}-${moment().valueOf()}.${fileExtension}`;
-    attachementPath = `uploads/${type}-${date}-${moment().valueOf()}.${fileExtension}`;
+    attachementPath = `uploads/reimbursements/${type}-${date}-${moment().valueOf()}.${fileExtension}`;
 
     fs.writeFile(uploadPath, attachementData, { encoding: "base64" }, () => {});
   }

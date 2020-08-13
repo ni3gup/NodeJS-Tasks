@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const reimbursementRoutes = require("./routes/reimbursement");
+const scheduleRoutes = require("./routes/schedule");
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(bodyParser.json({ extended: true, limit: "50mb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/reimbursement", reimbursementRoutes);
+app.use("/schedule", scheduleRoutes);
 
 app.listen(3000, (req, res) => console.log(`Server Started on PORT 3000`));
