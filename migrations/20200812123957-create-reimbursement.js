@@ -54,9 +54,11 @@ module.exports = {
       },
       from_date: {
         type: Sequelize.DATEONLY,
+        allowNull: true,
       },
       to_date: {
         type: Sequelize.DATEONLY,
+        allowNull: true,
       },
       hotel_name: {
         type: Sequelize.STRING,
